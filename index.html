@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passwords</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="input-box">
+            <input type="password" id="password" placeholder="password">
+            <button type="submit"><img src="arrow.png" alt="arrow"></button>
+            <p id="message">Password is <span id="strength"></span></p>
+        </div>
+    </div>
+    <script>
+        var pass = document.getElementById("password");
+        var msg = document.getElementById("message");
+        var str = document.getElementById("strength");
+
+        pass.addEventListener("input", () => {
+            let password = pass.value;
+            let strength = 0;
+            
+            // Display the message when there's input
+            if (password.length > 0) {
+                msg.style.display = "block";
+            } else {
+                msg.style.display = "none";
+            }
+
+            // Check for various conditions
+            if (password.length >= 8) strength++;   // Check for at least 8 characters
+            if (/[A-Z]/.test(password)) strength++;  // Check for uppercase letters
+            if (/[0-9]/.test(password)) strength++;  // Check for numbers
+            if (/[^A-Za-z0-9]/.test(password)) strength++; // Check for special characters
+
+            // Update the UI based on the strength score
+            if (strength === 0) {
+                str.innerHTML = "too short";
+                pass.style.borderColor = "#ff5925";
+                msg.style.color = "#ff5925";
+            } else if (strength === 1) {
+                str.innerHTML = "weak";
+                pass.style.borderColor = "#ff5925";
+                msg.style.color = "#ff5925";
+            } else if (strength === 2) {
+                str.innerHTML = "medium";
+                pass.style.borderColor = "yellow";
+                msg.style.color = "yellow";
+            } else if (strength === 3) {
+                str.innerHTML = "strong";
+                pass.style.borderColor = "#26d730";
+                msg.style.color = "#26d730";
+            } else if (strength === 4) {
+                str.innerHTML = "very strong";
+                pass.style.borderColor = "#008000";  // Dark green for "very strong"
+                msg.style.color = "#008000";
+            }
+        });
+    </script>
+</body>
+</html>
